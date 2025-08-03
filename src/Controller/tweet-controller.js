@@ -25,6 +25,30 @@ const create=async(req,res)=>{
     }
     
 }
+
+const get=async(req,res)=>{
+    try{
+        const data=await tweetService.getWithComment(req.params.id);
+        return res.status(200).json({
+            data:data,
+            status:true,
+            message:"Successfully fetched the tweet",
+            err:{}
+        })
+   
+
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).json({
+            data:{},
+            status:false,
+            messasge:"not able to get the tweet",
+            err:err
+        })
+    }
+}
 export {
-    create
+    create,
+    get
 }

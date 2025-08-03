@@ -4,6 +4,19 @@ const tweetSchema=new mongoose.Schema({
     content:{
         type:String,
         required:true
+    },
+    likes:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Like'
+    }],
+    comments:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Comment'
+
+    }],
+    user:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
     }
 
 },{timestamps:true});

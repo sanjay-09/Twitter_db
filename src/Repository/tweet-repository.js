@@ -1,4 +1,5 @@
 import Tweet from "../Model/tweet.js";
+import Comment from "../Model/comment.js";
 
 class TweetRepository{
 
@@ -24,6 +25,39 @@ class TweetRepository{
 
         }
     }
+    async getWithComment(object_id){
+        try{
+            const tweet=await Tweet.findById(object_id);
+            tweet.comments=await this.populateComments(tweet.comments);
+            return tweet;
 
+        }
+        catch(err){
+            throw err;
+
+        }
+    }
+    async populateComments(commentsIds){
+        try{
+            const comments=await Comment.find({
+                _id:{
+                    $in:commentsIds
+                }
+            })
+
+            for(let comment of comments){
+                if(comment.comments.length>0){
+                    comment.comments=await this.populateComments(comment.comments);
+                }
+
+            }
+            return comments;
+
+        }
+        catch(err){
+            throw err;
+
+        }
+    }
 }
 export default TweetRepository;

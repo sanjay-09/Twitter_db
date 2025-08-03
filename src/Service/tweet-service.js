@@ -51,5 +51,16 @@ class TweetService{
 
     }
 
+    async getWithComment(object_id){
+        try{
+            const data=await this.tweetRepsitory.getWithComment(object_id);
+            return data;
+
+        }
+        catch(err){
+            throw err;
+        }
+    }
+
 }
 export default TweetService;
